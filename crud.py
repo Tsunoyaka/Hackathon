@@ -30,17 +30,6 @@ def get_all_data():
         except JSONDecodeError:
             return []
 
-# def get_price_data():
-#     price = int(input('Введите сумму'))
-#     obj_ = get_all_data()
-#     for data in obj_:
-#         if data['price'] > price:
-#                 print(get_all_data())
-#     with open(DB) as f:
-#         json.load(f)
-
-# get_price_data()
-
 
 
 
@@ -78,8 +67,6 @@ def buy():
         print('id', list['id'], list['title'],'цена:', list['price'], '\n')
     buy()
 
-# buy()
-
 
 
 def get_data_by_id():
@@ -110,7 +97,7 @@ def delete_data():
     print('Такого id не существует!', '\n')
     for list in data:
         print('id', list['id'], list['title'], '\n')
-    delete_data()
+    interface()
         
 
 
@@ -152,7 +139,6 @@ def get_price():
         if num == '1':
             if obj['price'] > price_:
                 print (obj)
-
         elif num == '2':
             if obj['price'] < price_:
                 print(obj)
@@ -188,7 +174,7 @@ def interface():
         elif name == '6':
             buy()
         elif name == '7':
-            print(get_price())
+            get_price()
         elif name == '8':
             break
         else:
