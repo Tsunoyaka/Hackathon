@@ -4,6 +4,7 @@ from json.decoder import JSONDecodeError
 from settings import DB
 from datetime import datetime
 
+
 def get_all_data():
     with open(DB) as f:
         try:
@@ -54,9 +55,6 @@ def buy():
             ---------------------------------
         """)
 
-
-
-
 def get_data_by_id():
     id_ = input('Введите id: ')
     data = get_all_data()
@@ -100,7 +98,6 @@ def delete_data():
         """)
         
 
-
 def update():
     id_ = input('Введите id: ')
     data = get_all_data()
@@ -122,8 +119,8 @@ def update():
             
     for list in data:
         print('id', list['id'], list['title'], '\n')
-    update()
          
+
 def get_price():
     print("""
     Выберите тип фильтрации:
@@ -151,6 +148,7 @@ def get_price():
         elif num == '2':
             if obj['price'] < price_:
                 print(super_list)
+
 
 def get_status():
     print("""
@@ -180,7 +178,7 @@ def get_status():
             if obj['status'] == 'Продано':
                 print(super_list)
 
-
+ 
 def all_data():
     data = get_all_data()
     num = 0
