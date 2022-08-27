@@ -4,33 +4,12 @@ from json.decoder import JSONDecodeError
 from settings import DB
 from datetime import datetime
 
-list_ = """
-[
-    {
-        "if": 1,
-        "title": "LG",
-        "price": 1000
-        "description": "life Is Good",
-        "date_created": "24.08.22 19:05"
-    },
-    {
-        "if": 2,
-        "price": 1000
-        "title": "Samsung",
-        "descriptn": "life Is Good",
-        "date_created": "24.08.22 19:05"
-    }
-]
-"""
-
 def get_all_data():
     with open(DB) as f:
         try:
             return json.load(f)
         except JSONDecodeError:
             return []
-
-
 
 
 def create_data():
@@ -62,10 +41,19 @@ def buy():
             with open(DB, 'w') as f:
                 json.dump(data, f, indent=4)
             return None
+        print("""
+            Такого id не существует!
+        
+            Существующие id:
+        """)
     for list in data:
-        print('Такого id не существует!', '\n')
-        print('id', list['id'], list['title'],'цена:', list['price'], '\n')
-    buy()
+        print(f"""
+            ---------------------------------
+            id: {list['id']}
+            title: {list['title']}
+            ---------------------------------
+        """)
+
 
 
 
@@ -76,10 +64,16 @@ def get_data_by_id():
         if obj['id'] == id_:
             return obj
         elif obj['id'] != id_:
-            print('Такого id не существует!', '\n')
+            print("""
+    Такого id не существует!
+    
+        Существующие id:
+    """)
             for list in data:
-                print('id', list['id'], list['title'], '\n')
-            print(get_data_by_id())
+                print(f"""
+        id: {list['id']}
+        title: {list['title']}
+                """)
             break
 
 
@@ -92,12 +86,18 @@ def delete_data():
             break
     with open(DB, 'w') as f:
         json.dump(data, f, indent=4)
-
-
-    print('Такого id не существует!', '\n')
+    print("""
+        Такого id не существует!
+    
+        Существующие id:
+    """)
     for list in data:
-        print('id', list['id'], list['title'], '\n')
-    interface()
+        print(f"""
+        ---------------------------------
+        id: {list['id']}
+        title: {list['title']}
+        ---------------------------------
+        """)
         
 
 
@@ -125,23 +125,80 @@ def update():
     update()
          
 def get_price():
-    price_ = int(input('Введите цену: '))
-
     print("""
     Выберите тип фильтрации:
     1. Показывает товары чья цена больше указанной суммы
     2. Показывает товары чья цены меньше указанной суммы
     """)
-
+    price_ = int(input('Введите цену для фильтрации: '))
     num = input('Указать тип фильтрации: ')
     data = get_all_data()
     for obj in data:
+        super_list = (f"""
+        ---------------------------------
+        id: {obj['id']}
+        title: {obj['title']}
+        price: {obj['price']}
+        description: {obj['description']}
+        data_created: {obj['data_created']}
+        data_update: {obj['data_update']}
+        status: {obj['status']}
+        ---------------------------------
+        """)
         if num == '1':
             if obj['price'] > price_:
-                print (obj)
+                print (super_list)
         elif num == '2':
             if obj['price'] < price_:
-                print(obj)
+                print(super_list)
+
+def get_status():
+    print("""
+    Выберите тип фильтрации:
+    1. Показывает имеющиеся товары
+    2. Показывает проданные товары
+    """)
+    num = input()
+    data = get_all_data()
+    super_list = (f"""
+    Товар № {num}
+    ---------------------------------
+    id: {obj['id']}
+    title: {obj['title']}
+    price: {obj['price']}
+    description: {obj['description']}
+    data_created: {obj['data_created']}
+    data_update: {obj['data_update']}
+    status: {obj['status']}
+    ---------------------------------
+    """)
+    for obj in data:
+        if num == '1':
+            if obj['status'] == 'Продается':
+                print(super_list)
+        elif num == '2':
+            if obj['status'] == 'Продано':
+                print(super_list)
+
+
+def all_data():
+    data = get_all_data()
+    num = 0
+    for obj in data:
+        num += 1
+        print(f"""
+        Товар № {num}
+        ---------------------------------
+        id: {obj['id']}
+        title: {obj['title']}
+        price: {obj['price']}
+        description: {obj['description']}
+        data_created: {obj['data_created']}
+        data_update: {obj['data_update']}
+        status: {obj['status']}
+        ---------------------------------
+         """)
+
 
 def interface():
     info_data = """
@@ -152,9 +209,9 @@ def interface():
         4. retrieve - получить продукт по id
         5. update - изменить данные
         6. buy - купить товар
-        7. filter - фильтрация по цене
-        8. exit - выйти из программы
-        
+        7. filter price - фильтрация по цене
+        8. filter status - фильтрация по статусу
+        9. exit - выйти из программы
         """  
     print(info_data)
     while True:
@@ -166,7 +223,7 @@ def interface():
         elif name == '2':
             delete_data()
         elif name == '3':
-            print(get_all_data())
+            all_data()
         elif name == '4':
             get_data_by_id()
         elif name == '5':
@@ -176,6 +233,8 @@ def interface():
         elif name == '7':
             get_price()
         elif name == '8':
+            get_status()
+        elif name == '9':
             break
         else:
             print('Функция с таким номером отсутствует')
