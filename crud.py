@@ -79,7 +79,6 @@ def get_data_by_id():
                 """)
 
 
-
 def delete_data():
     id_ = input('Введите id: ')
     data = get_all_data()
@@ -131,8 +130,8 @@ def get_price():
     1. Показывает товары чья цена больше указанной суммы
     2. Показывает товары чья цены меньше указанной суммы
     """)
-    price_ = int(input('Введите цену для фильтрации: '))
     num = input('Указать тип фильтрации: ')
+    price_ = int(input('Введите цену для фильтрации: '))
     data = get_all_data()
     for obj in data:
         super_list = (f"""
