@@ -2,19 +2,19 @@
     {
         "id": "193341",
         "title": "Aidar",
-        "price": 5,
-        "description": "Rolan",
+        "price": 15,
+        "description": "CHEL",
         "data_created": "26.08.2022 19:34",
-        "data_update": "26.08.2022 19:52:56",
+        "data_update": "28.08.2022 14:10:09",
         "status": "\u041f\u0440\u043e\u0434\u0430\u0435\u0442\u0441\u044f"
     },
     {
-        "id": "205213",
-        "title": "TTTTT",
-        "price": 10,
-        "description": "hjgjk",
-        "data_created": "26.08.2022 20:52",
+        "id": "145833",
+        "title": "1",
+        "price": 1,
+        "description": "1",
+        "data_created": "28.08.2022 14:58",
         "data_update": "",
-        "status": "\u041f\u0440\u043e\u0434\u0430\u043d\u043e"
+        "status": "\u041f\u0440\u043e\u0434\u0430\u0435\u0442\u0441\u044f"
     }
 ]

@@ -39,40 +39,45 @@ def buy():
             sum_ = int(input('Введите сумму: '))
             if i['price'] <= sum_:
                 i['status'] = 'Продано'
+            else:
+                print('У вас недостаточно средтсв!')
             with open(DB, 'w') as f:
                 json.dump(data, f, indent=4)
             return None
-        print("""
-            Такого id не существует!
+    print("""
+            Такого id не существует или товар уже продан
         
-            Существующие id:
+            Товары в продаже:
         """)
     for list in data:
-        print(f"""
+        if list['status'] == 'Продается':
+            print(f"""
             ---------------------------------
             id: {list['id']}
             title: {list['title']}
+            price: {list['price']}
+            status: {list['status']}
             ---------------------------------
         """)
+
 
 def get_data_by_id():
     id_ = input('Введите id: ')
     data = get_all_data()
-    for obj in get_all_data():
+    for obj in data:
         if obj['id'] == id_:
             return obj
-        elif obj['id'] != id_:
-            print("""
-    Такого id не существует!
+    print("""
+        Такого id не существует!
     
         Существующие id:
     """)
-            for list in data:
-                print(f"""
+    for list in data:
+            print(f"""
         id: {list['id']}
         title: {list['title']}
                 """)
-            break
+
 
 
 def delete_data():
@@ -81,11 +86,10 @@ def delete_data():
     for obj in data:
         if obj['id'] == id_:
             data.remove(obj)
-            break
-    with open(DB, 'w') as f:
-        json.dump(data, f, indent=4)
+        with open(DB, 'w') as f:
+            json.dump(data, f, indent=4)
     print("""
-        Такого id не существует!
+        Такого id не существует или он был удален
     
         Существующие id:
     """)
@@ -158,25 +162,33 @@ def get_status():
     """)
     num = input()
     data = get_all_data()
-    super_list = (f"""
-    Товар № {num}
-    ---------------------------------
-    id: {obj['id']}
-    title: {obj['title']}
-    price: {obj['price']}
-    description: {obj['description']}
-    data_created: {obj['data_created']}
-    data_update: {obj['data_update']}
-    status: {obj['status']}
-    ---------------------------------
-    """)
     for obj in data:
+        super_list = (f"""
+        ---------------------------------
+        id: {obj['id']}
+        title: {obj['title']}
+        price: {obj['price']}
+        description: {obj['description']}
+        data_created: {obj['data_created']}
+        data_update: {obj['data_update']}
+        status: {obj['status']}
+        ---------------------------------
+        """)
         if num == '1':
             if obj['status'] == 'Продается':
                 print(super_list)
         elif num == '2':
             if obj['status'] == 'Продано':
                 print(super_list)
+
+
+# def data_time():
+#     SSS = input('Введите дату: ')
+#     data = get_all_data()
+#     for obj in data:
+#         if obj['data_created'] == SSS:
+#             print(obj)
+#  Должно ли это работать так?
 
  
 def all_data():
