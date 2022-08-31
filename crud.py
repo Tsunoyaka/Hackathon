@@ -32,6 +32,7 @@ def create_data():
     
 
 
+
 def buy():
     data = get_all_data()
     print("""
@@ -242,6 +243,31 @@ def all_data():
          """)
 
 
+def super_filter():
+    print("""
+        Выберите нужный вам фильтр:
+        1. Фильтр по цене товара
+        2. Фильтр по статусу товара
+        3. Фильтр по дате создания товара
+    """)
+    num = input()
+    if num == '1':
+        print("""       
+        Вы выбрали фильтрацию по цене товара
+        """)
+        get_price()
+    elif num == '2':
+        print("""       
+        Вы выбрали фильтрацию статусу товара
+        """)
+        get_status()
+    elif num == '3':
+        print("""
+        Вы выбрали фильтрацию дате создания товара
+        """)
+        data_time()
+
+
 def interface():
     info_data = """
         0. Список функций
@@ -251,10 +277,8 @@ def interface():
         4. retrieve - получить продукт по id
         5. update - изменить данные
         6. buy - купить товар
-        7. filter price - фильтрация по цене
-        8. filter status - фильтрация по статусу
-        9. filrer creat time - фильтрация по дате создания
-        10. exit - выйти из программы
+        7. super filter - фильтрация по цене, статусу и дате создания товара
+        8. exit - выйти из программы
         """  
     print(info_data)
     while True:
@@ -274,14 +298,11 @@ def interface():
         elif name == '6':
             buy()
         elif name == '7':
-            get_price()
+            super_filter()
         elif name == '8':
-            get_status()
-        elif name == '9':
-            data_time()
-        elif name == '10':
             break
         else:
-            print('Функция с таким номером отсутствует')
-            break
+            print("""
+        Функция с таким номером отсутствует!
+        """)
 
