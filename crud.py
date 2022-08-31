@@ -29,11 +29,26 @@ def create_data():
     json_data.append(data)
     with open(DB, 'w') as f:
         json.dump(json_data, f, indent=4)
+    
 
 
 def buy():
-    id = input('Введите id: ')
     data = get_all_data()
+    print("""
+        Товары в продаже:        
+    """)
+    for list in data:
+        if list['status'] == 'Продается':
+            
+            print(f"""
+        ---------------------------------
+        id: {list['id']}
+        title: {list['title']}
+        price: {list['price']}
+        status: {list['status']}
+        ---------------------------------
+        """)
+    id = input('Введите id: ')
     for i in data:
         if i['id'] == id:
             sum_ = int(input('Введите сумму: '))
@@ -45,19 +60,19 @@ def buy():
                 json.dump(data, f, indent=4)
             return None
     print("""
-            Такого id не существует или товар уже продан
-        
-            Товары в продаже:
+        Такого id не существует или товар уже продан
+    
+        Товары в продаже:
         """)
     for list in data:
         if list['status'] == 'Продается':
             print(f"""
-            ---------------------------------
-            id: {list['id']}
-            title: {list['title']}
-            price: {list['price']}
-            status: {list['status']}
-            ---------------------------------
+        ---------------------------------
+        id: {list['id']}
+        title: {list['title']}
+        price: {list['price']}
+        status: {list['status']}
+        ---------------------------------
         """)
 
 
@@ -74,8 +89,10 @@ def get_data_by_id():
     """)
     for list in data:
             print(f"""
+        ---------------------------------
         id: {list['id']}
         title: {list['title']}
+        ---------------------------------
                 """)
 
 
@@ -116,19 +133,24 @@ def update():
             with open(DB, 'w') as f:
                 json.dump(data, f, indent=4)
             return None
-    print('Такого id не существует!!!', '\n'
-    'Выберите id нужного вам товара:', '\n'
-            )
-            
+    print("""
+        Такого id не существует!!!
+        Выберите id нужного вам товара:
+        """)
     for list in data:
-        print('id', list['id'], list['title'], '\n')
+        print(f"""
+        ---------------------------------
+        id: {list['id']}
+        title: {list['title']}
+        ---------------------------------
+    """)
          
 
 def get_price():
     print("""
-    Выберите тип фильтрации:
-    1. Показывает товары чья цена больше указанной суммы
-    2. Показывает товары чья цены меньше указанной суммы
+        Выберите тип фильтрации:
+        1. Показывает товары чья цена больше указанной суммы
+        2. Показывает товары чья цены меньше указанной суммы
     """)
     num = input('Указать тип фильтрации: ')
     price_ = int(input('Введите цену для фильтрации: '))
@@ -155,10 +177,10 @@ def get_price():
 
 def get_status():
     print("""
-    Выберите тип фильтрации:
-    1. Показывает имеющиеся товары
-    2. Показывает проданные товары
-    """)
+        Выберите тип фильтрации:
+        1. Показывает имеющиеся товары
+        2. Показывает проданные товары
+        """)
     num = input()
     data = get_all_data()
     for obj in data:
@@ -181,13 +203,24 @@ def get_status():
                 print(super_list)
 
 
-# def data_time():
-#     SSS = input('Введите дату: ')
-#     data = get_all_data()
-#     for obj in data:
-#         if obj['data_created'] == SSS:
-#             print(obj)
-#  Должно ли это работать так?
+def data_time():
+    data = get_all_data()
+    for obj in data:
+        print (f"""
+        ---------------------------------
+        id: {obj['id']}
+        title: {obj['title']}
+        data_created: {obj['data_created'][0:10]}
+        ---------------------------------
+        """)
+    SSS = input('Введите дату: ')
+    for obj in data:
+        if obj['data_created'][0:10] == SSS:
+            print(obj)
+            return None
+    print("""
+        Товар с такой датой создания отсуствует!
+        """)
 
  
 def all_data():
@@ -220,7 +253,8 @@ def interface():
         6. buy - купить товар
         7. filter price - фильтрация по цене
         8. filter status - фильтрация по статусу
-        9. exit - выйти из программы
+        9. filrer creat time - фильтрация по дате создания
+        10. exit - выйти из программы
         """  
     print(info_data)
     while True:
@@ -244,7 +278,10 @@ def interface():
         elif name == '8':
             get_status()
         elif name == '9':
+            data_time()
+        elif name == '10':
             break
         else:
             print('Функция с таким номером отсутствует')
             break
+
